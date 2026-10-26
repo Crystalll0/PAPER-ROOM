@@ -77,7 +77,7 @@ Paper sizes include A4, A3, square, rectangular and narrow star-strip paper. The
 
 Projects and drafts use this browser's local storage. They are not automatically uploaded or synchronised across devices. Clearing site data can remove saved projects; export a JSON backup to keep a separate copy.
 
-The hosted website and a locally served copy use separate storage. Export and import files to move projects between them. No account credentials belong in this repository.
+The hosted website and a locally served copy use separate storage. Export and import files to move projects between them.
 
 ## Known limitations
 
@@ -116,4 +116,4 @@ No test packages need installing. The workspace tests use a minimal DOM substitu
 
 OpenAI Codex assisted with implementation, debugging, testing and documentation. The author's design decisions and AI-use disclosure are in [PROCESS.md](PROCESS.md). Tool and material credits are in [CREDITS.md](CREDITS.md).
 
-**The required trial with another person has not yet been documented.** Complete the trial record in PROCESS.md and the final fresh-terminal check before submitting this repository URL on Canvas.
+**Work in progress:** the trial with another person and the final fresh-terminal check are still pending. The development timeline and current trial plan are recorded in [PROCESS.md](PROCESS.md).

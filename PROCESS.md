@@ -6,6 +6,19 @@ I wanted to create a virtual paper workspace where beginners could explore foldi
 
 I proposed using the left mouse button to drag paper, Space to confirm a fold and the right mouse button to rotate the view. Separating preview from confirmation was important to me: an exploratory drag should not leave an unwanted crease.
 
+## Development timeline
+
+This timeline summarises the project retrospectively from our development conversation, screenshots and saved commits. Dates below refer to local development, unless an upload is explicitly mentioned; they are not separate GitHub upload dates. All dated entries use Hong Kong time.
+
+| Date or stage | Work and decisions | Record |
+| --- | --- | --- |
+| Initial discussion, before the first saved prototype | I considered an origami game with free exploration and teaching modes. I asked for different paper sizes, a three-dimensional view, dragging to fold and Space to confirm. | Development conversation; the exact start time is not recorded here. |
+| 15 October 2026, 10:20 | The first saved prototype established the paper workspace and interaction. | Commit `425eb36`. |
+| 15 October 2026, 10:56 | After trying the prototype, I requested changes to cut marks, project saving, the recycle bin and folding behaviour, as well as glue and circular cutting. The next saved version expanded the workspace. | Commit `ba1f409`; screenshot supplied at 10:24. |
+| 23 October 2026, 15:52 | Testing the narrow strip revealed that requiring contact with the paper prevented outward folds. I asked for this restriction to be removed, and the implementation was revised. | Commit `3f7e6a4`; screenshot supplied at 14:45. |
+| 26 October 2026 | The existing source and three development commits were uploaded to this repository. English documentation, a screenshot and local run instructions were prepared together with Codex. | Commit `f869f3a`. |
+| Next step | A trial with another person, followed by a design decision based on what I observe. | Not yet completed. |
+
 ## Scope decision
 
 The initial discussion included fully free folding and tutorials for objects such as a paper crane. I accepted Codex's recommendation to start with constrained straight-fold geometry instead of attempting a complete flexible-paper physics simulation. This made a working interaction more achievable and explainable.
@@ -34,17 +47,15 @@ A later version required the dragged point to contact the remaining paper before
 
 I rejected that restriction and requested that snapping assist alignment without controlling whether a fold is permitted. The revised version allows outward folds when the fold line actually crosses the material. The preview shows the same flat-fold geometry that confirmation produces.
 
-This is a concrete example of using my own trial of the prototype to question and revise an AI-generated implementation.
+The narrow strip exposed a problem I had not noticed with A4 paper: the contact rule made a plausible fold impossible. I kept snapping as an alignment aid, but removed it as a condition for confirming a fold.
 
 ### Additional workspace features
 
-I requested saved projects and folders so that users could retain their work. I also requested adjustable glue painting, flipping, circular cutting, themes and language choices. These support the core activity, but their quantity is not evidence of usability on its own.
+I requested saved projects and folders so that users could retain their work. I also requested adjustable glue painting, flipping, circular cutting, themes and language choices. My priority for the next trial is whether someone can understand and complete a fold, rather than whether they discover every tool.
 
 ## Trial with another person — not yet completed
 
-The observations above are the author's own feedback during development. They are not claimed as the assignment's required trial with another person.
-
-Before submission, ask at least one other person to try the experience before explaining the controls. Record actual observations below; do not invent results or identify the participant.
+So far, the feedback above comes from my own use of the prototype. I still need to observe another person trying it without an explanation of the controls. I will complete the following record after that session.
 
 - **Date:** To be completed.
 - **Task given before explaining the controls:** To be completed.
@@ -54,13 +65,13 @@ Before submission, ask at least one other person to try the experience before ex
 - **One change made in response, or a reason for keeping the design:** To be completed.
 - **Result after the decision:** To be completed.
 
-A suitable trial task is to fold the paper, unfold it and try cutting it into two pieces. Observe before offering help.
+I plan to ask the participant to fold the paper, unfold it and try cutting it into two pieces. I will first observe what they attempt before offering help.
 
 ## AI use
 
 I used OpenAI Codex to discuss scope, generate and revise HTML/CSS/JavaScript, work on geometry, create checks, prepare documentation and publish the website.
 
-I supplied the concept and interaction requirements, tried the prototype, provided screenshots and requested revisions. Much of the implementation was generated and modified with Codex; I do not claim that I independently wrote all of the code.
+I supplied the concept and interaction requirements, tried the prototype, provided screenshots and requested revisions. Codex generated and revised much of the code. My work centred on defining the interaction, trying the results and deciding what needed to change. Codex also helped organise and edit these English project notes from our conversation.
 
 - **Suggestion kept:** start with constrained straight-fold geometry rather than a full flexible-paper simulation.
 - **Suggestion or implementation changed:** the paper-contact requirement for confirming folds was too restrictive, especially for narrow strips. I requested outward folding while keeping snapping optional.
@@ -74,7 +85,7 @@ The folding interaction connects three parts of the code:
 2. `foldPlan` in `dist/engine.js` places a fold line halfway between them, perpendicular to the drag direction. It checks whether the line divides material and prepares a preview.
 3. Confirming calls `fold`, which divides the affected polygons, reflects the moving side across the line and records the crease. Cancelling discards the preview without changing the paper.
 
-Before submission, I need to be able to explain this connection in my own words, rather than only repeat the function names.
+The important distinction is between previewing and committing: dragging prepares a possible change, while confirmation changes the stored paper geometry. This is how the code implements my requirement that trying a fold should not immediately leave a crease.
 
 ## Verification and limits
 
@@ -88,7 +99,7 @@ Earlier browser inspection confirmed the workspace layout and paper rendering. N
 
 This repository carries forward three existing development commits from the local Sites source repository, followed by preparation of the English submission files. The earlier commit messages are generic, but their diffs record the initial prototype, the expanded workspace and outward-fold correction.
 
-The original development snapshots and dates are retained. Commit contact information was replaced with the repository owner's GitHub no-reply address before public upload. Historical snapshots may contain the earlier Chinese documentation; the current submission documentation is in English. No development dates or user-trial results have been fabricated.
+The original development snapshots and dates are retained. Commit contact information was replaced with the repository owner's GitHub no-reply address before public upload. Historical snapshots may contain the earlier Chinese documentation; the current submission documentation is in English. The documentation was assembled on 26 October from the earlier work, rather than written alongside every development step.
 
 ## Remaining submission tasks
 

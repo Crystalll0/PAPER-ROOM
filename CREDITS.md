@@ -6,5 +6,3 @@
 - **Visual materials:** system fonts, Unicode tool symbols and paper shapes drawn by the application. No external photos, sound recordings or datasets were used.
 - **Hosting:** OpenAI Sites hosts the optional live demonstration. Local execution does not depend on that service.
 - **Course examples and tutorials:** no course example or external tutorial code was incorporated into this implementation.
-
-The source is provided for this coursework submission. No third-party media, personal recordings or API credentials should be added without checking permission to share them.
