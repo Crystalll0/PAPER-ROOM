@@ -85,7 +85,7 @@ This is a polygon-based folding prototype with three-dimensional projection, not
 
 Cutting and painting glue require unfolded paper. Partial cuts do not simulate local bending. Circular cuts use a 96-sided approximation. Glued pieces move as a group; a self-glued fold must be undone before unfolding. Many successive operations can increase the computational workload.
 
-The learning section introduces basic controls rather than a complete paper-crane tutorial. Desktop mouse and keyboard use is the primary target.
+The learning section currently introduces basic controls; it does not yet include tutorials for making specific origami models. Future iterations may add detailed, step-by-step guides for shapes such as hearts, cranes, stars and Christmas trees. Desktop mouse and keyboard use is the primary target.
 
 ## Source and checks
 

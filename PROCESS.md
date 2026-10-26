@@ -8,16 +8,16 @@ I proposed using the left mouse button to drag paper, Space to confirm a fold an
 
 ## Development timeline
 
-This timeline summarises the project retrospectively from our development conversation, screenshots and saved commits. Dates below refer to local development, unless an upload is explicitly mentioned; they are not separate GitHub upload dates. All dated entries use Hong Kong time.
+The project is organised into the following development stages. v4 and v5 are my working labels for these stages, rather than GitHub release tags. Activities after 26 October are planned and will be updated after they take place.
 
-| Date or stage | Work and decisions | Record |
+| Dates (2026) | Development stage | Status |
 | --- | --- | --- |
-| Initial discussion, before the first saved prototype | I considered an origami game with free exploration and teaching modes. I asked for different paper sizes, a three-dimensional view, dragging to fold and Space to confirm. | Development conversation; the exact start time is not recorded here. |
-| 15 October 2026, 10:20 | The first saved prototype established the paper workspace and interaction. | Commit `425eb36`. |
-| 15 October 2026, 10:56 | After trying the prototype, I requested changes to cut marks, project saving, the recycle bin and folding behaviour, as well as glue and circular cutting. The next saved version expanded the workspace. | Commit `ba1f409`; screenshot supplied at 10:24. |
-| 23 October 2026, 15:52 | Testing the narrow strip revealed that requiring contact with the paper prevented outward folds. I asked for this restriction to be removed, and the implementation was revised. | Commit `3f7e6a4`; screenshot supplied at 14:45. |
-| 26 October 2026 | The existing source and three development commits were uploaded to this repository. English documentation, a screenshot and local run instructions were prepared together with Codex. | Commit `f869f3a`. |
-| Next step | A trial with another person, followed by a design decision based on what I observe. | Not yet completed. |
+| 15–20 October | Decide on the concept and explore the interaction through early prototypes. | Completed |
+| 20–23 October | Develop the initial website prototype through repeated testing, debugging and feature revisions, reaching v4. | Completed |
+| 24–26 October | Refine v4 and adjust its features, producing the v5 working version. | Completed |
+| 27–28 October | Conduct user testing and collect observations and feedback. | Planned |
+| 29–30 October | Revise the website in response to the user feedback. | Planned |
+| 31 October | Make the final updates to the GitHub repository and finish the submission documentation. | Planned |
 
 ## Scope decision
 
