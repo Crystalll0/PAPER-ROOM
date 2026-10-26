@@ -1,51 +1,119 @@
-# 纸间 · Paper Room — Studio 02
+# Paper Room
 
-面向折纸和纸艺初学者的交互工作台。默认 A4，支持连续直线平折、正背面翻转、接触吸附、分段裁剪、圆规裁圆、点涂胶水、回收站，以及本地作品库。
+An interactive website for exploring basic paper folding, cutting and composition.
 
-## 运行
+**[Try the live website](https://paper-room-crystal.wry-toast-5992.chatgpt.site/)** · [Development process](PROCESS.md) · [Credits](CREDITS.md)
 
-无需安装 JavaScript 依赖。直接用桌面浏览器打开 `dist/index.html`，或在项目目录运行：
+## Idea and intended user
+
+Paper Room is designed for beginners who want to experiment with digital origami and paper crafts. Users choose a paper size and fold, cut or combine pieces in a workspace with a three-dimensional view.
+
+The main intention is to make experimentation recoverable. A drag previews a change before the user commits to it. Cancel, undo and the recycle bin help the user recover and decide what to try next.
+
+## Main interaction
+
+1. Select **Fold** and drag from a point on the paper to a target position.
+2. The program calculates a fold line and previews the resulting shape.
+3. Press **Space** or click **Confirm** to create the fold, or press **Esc** to cancel.
+4. The paper changes shape and retains a crease. Continue folding, flip it or unfold it.
+
+Releasing the mouse does not commit a fold. Targets can be outside the original outline. Snapping assists alignment near corners and edges; it is not required for confirmation.
+
+**Input → calculation → visible preview → user decision → updated paper.**
+
+## Screenshot
+
+![Paper Room workspace](docs/workspace.png)
+
+## Run locally
+
+The application is static HTML, CSS and JavaScript. It has no third-party JavaScript runtime dependencies and requires no API key, AI model or paid account. Use a modern desktop browser with a mouse and keyboard.
+
+Download and extract this repository, or clone it:
+
+```sh
+git clone https://github.com/Crystalll0/PAPER-ROOM.git
+cd PAPER-ROOM
+```
+
+From the directory containing `dist`, start a static server with Python 3:
 
 ```sh
 python3 -m http.server 8765 --directory dist
 ```
 
-访问 http://localhost:8765 。Python 只用于静态服务，任何静态服务器都可以代替。推荐鼠标和键盘。浏览器的本地存储按网站地址区分；直接文件、localhost 和线上网址的作品库互不共享，可用导出/导入转移。
+Open **http://localhost:8765**. Stop the server with **Ctrl+C** in the terminal. Python is only used as a static server, not as the application runtime; another static server can serve `dist` instead. The hosted website is not needed for local use.
 
-## 操作
+The repository version defaults to English. Simplified Chinese and Traditional Chinese remain available as optional interface languages. A previous language choice is retained by the browser.
 
-- 折叠：左键抓取纸面、角或边拖动。角点和边缘附近自动吸附；落点可以在原纸张范围外，预览直接显示确认后的平折形状。空格或确认按钮才形成折痕；Esc 取消。吸附仅辅助对齐，不是确认的前提；折线仍须实际穿过纸张。
-- 右键拖动旋转视角，滚轮缩放；俯视、3D 视角和适应画布按钮恢复常用观察方式。
-- 翻面：点击选择纸片后翻转。每次折叠统一向当前朝上的一面折起；整侧纸层一起折叠。展开恢复材料形状，保留轻柔的折痕。
-- 剪刀：先展开，从折痕上拖动选择一段切口，空格确认。可分多次剪完。贯穿材料后生成独立纸片；切断处不再保留原来的折痕/切口标记。所有标记都裁剪在所属纸片内部。
-- 圆规：在展开的纸面按住圆心并拖动设置半径，确认留下圆形引导线。用剪刀点击圆线，再确认，切出圆片及剩余纸。圆跨过纸张边界时，各不相连的边角分别成为纸片。
-- 胶水：调节笔刷直径，在展开纸张上点涂。切换移动工具，把另一片纸移到胶水处，确认后两片成为一起移动的组合，胶水标记隐藏。也可以把本张纸折回胶水处并确认；这会固定折叠，需撤销粘贴后才能展开。
-- 移动：拖动独立纸片；拖到回收站回收。点击回收站打开管理窗口，不会自动恢复纸片。支持单张/全部恢复或删除；本次会话中的删除支持撤销。
-- 添加纸张不替换当前工作台。新建作品前自动保存当前作品，保存失败则保留工作台。
-- 我的作品：保存、创建时间、修改时间、重命名、删除、创建/重命名/删除文件夹、改变归类、导出/导入 JSON 文件。删除文件夹保留作品。草稿自动保存并在刷新后恢复。保存的版本通过「保存作品」更新。
-- 白天/黑夜、简体中文/繁体中文/English；语言和主题保留在本浏览器。
+## Controls and features
 
-## 保存与隐私
+| Action | Control |
+| --- | --- |
+| Preview a fold | Select Fold and drag with the left mouse button |
+| Commit or cancel a preview | Space / Confirm, or Esc / Cancel |
+| Rotate and zoom | Right-drag, or scroll the mouse wheel |
+| Flip or unfold | Select a piece and choose Flip over or Unfold |
+| Cut along a crease | Unfold, select Scissors, drag along a crease and confirm |
+| Cut a circle | Draw and confirm a circle with Compass, then select its guide with Scissors and confirm |
+| Glue pieces | Paint glue, move another piece into contact and confirm |
+| Recover an action | Undo or Redo |
+| Recycle a piece | Use Move to drag it into the bin |
+| Restore a piece | Open the bin and choose Restore |
+| Save or back up | Save project or Export file |
 
-作品和草稿仅保存在当前浏览器 localStorage，不上传纸张状态，也不跨设备同步。清除网站数据会移除本地作品，建议导出 JSON 备份。存储空间不足或被禁用时显示错误，并保留当前工作台和导出入口。导入有格式、几何数值和大小检查。文件不包含账号凭据。
+Paper sizes include A4, A3, square, rectangular and narrow star-strip paper. The workspace also includes adjustable paper/background colours, light/dark themes, folders, project renaming and JSON import/export.
 
-## 实现边界
+## Error handling
 
-原生 HTML、CSS、JavaScript；三维坐标通过 Canvas 正交投影显示。支持直线平折和分片几何，不是完整柔性纸张物理模拟：没有纸张卷曲、真实自碰撞、单层抽取、压折或复杂反向折。预览贴合和确认后的平折均为 180°，吸附判断针对拖动点及接触纸面，只辅助对齐，不限制向外折叠，也不是多约束物理解算。观察倾角有限制，防止接近侧视时无法合理拖动。
+- Cancelling an exploratory drag leaves no new crease.
+- A proposed fold line that does not pass through the material is not accepted.
+- Partial cuts do not prematurely separate a sheet. Crease and cut marks stay within their owning pieces.
+- Invalid imported files produce an error message.
+- If browser storage fails, the workspace is retained and an export option remains available. Creating a new project does not clear the current work after a failed save.
+- Recycled pieces can be restored individually or together.
 
-裁剪与点涂胶水需在展开状态操作。部分切口会保留，但不模拟切口附近局部弯曲。圆形用 96 边形近似。胶水以几何交叠和涂抹区域相交判断粘接，粘好后整体操作，不模拟软胶或独立铰链。复杂图形大量连续操作时可能出现较高计算量。入门教学提供对折、展开和裁剪引导；尚未加入完整千纸鹤教程。
+## Saving and privacy
 
-## 检查
+Projects and drafts use this browser's local storage. They are not automatically uploaded or synchronised across devices. Clearing site data can remove saved projects; export a JSON backup to keep a separate copy.
 
-安装 Node.js 后，无需安装依赖：
+The hosted website and a locally served copy use separate storage. Export and import files to move projects between them. No account credentials belong in this repository.
+
+## Known limitations
+
+This is a polygon-based folding prototype with three-dimensional projection, not a complete physical simulation of flexible paper. It supports straight, flat folds and moves the layers on one side together. It does not simulate curling, realistic collisions, individual-layer selection or complex reverse folds.
+
+Cutting and painting glue require unfolded paper. Partial cuts do not simulate local bending. Circular cuts use a 96-sided approximation. Glued pieces move as a group; a self-glued fold must be undone before unfolding. Many successive operations can increase the computational workload.
+
+The learning section introduces basic controls rather than a complete paper-crane tutorial. Desktop mouse and keyboard use is the primary target.
+
+## Source and checks
+
+```text
+dist/
+  index.html       Page structure
+  style.css        Interface styles
+  app.js           Input, interface and browser storage
+  engine.js        Folding, cutting and gluing geometry
+  i18n.js          Interface language strings
+tests/
+  geometry.cjs     Geometry regression checks
+  workspace.cjs    Application-state checks
+docs/
+  workspace.png    Screenshot
+```
+
+With Node.js installed, run:
 
 ```sh
 node tests/geometry.cjs
 node tests/workspace.cjs
 ```
 
-几何检查覆盖接触/非接触确认、两次折叠、翻面、面积守恒、分段切口、裁切后标记清除、圆孔及独立边角、不同纸色粘贴、同纸粘贴固定和导入验证。工作台状态测试使用最小 DOM 替身，覆盖保存/重命名/时间戳/文件夹、刷新恢复、回收站管理、撤销、指针事件到折叠确认、三语言和主题、存储失败保护。浏览器初始界面与纸片显示另做了目视检查；这些状态测试不能代替完整跨设备和真实用户试用。
+No test packages need installing. The workspace tests use a minimal DOM substitute; they are not full browser automation or a substitute for a trial with another person.
 
-## 课程提交
+## Authorship and submission status
 
-这是一份持续迭代的原型，线上 Sites 预览不是课程要求的本人公开 GitHub 仓库。提交前仍需补充正式用户试用记录、最终截图、个人说明和公开仓库链接。
+OpenAI Codex assisted with implementation, debugging, testing and documentation. The author's design decisions and AI-use disclosure are in [PROCESS.md](PROCESS.md). Tool and material credits are in [CREDITS.md](CREDITS.md).
+
+**The required trial with another person has not yet been documented.** Complete the trial record in PROCESS.md and the final fresh-terminal check before submitting this repository URL on Canvas.

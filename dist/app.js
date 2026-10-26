@@ -2,7 +2,7 @@
 const E=PaperEngine,$=id=>document.getElementById(id),canvas=$('canvas'),ctx=canvas.getContext('2d');
 const STORAGE='paper-room-v2',DRAFT='paper-room-draft-v2',PREF='paper-room-preferences-v2';
 let storageFailed=false;function read(key,fallback){try{return JSON.parse(localStorage.getItem(key))||fallback}catch{return fallback}}
-let prefs=read(PREF,{lang:0,dark:false,bgLight:'#e8ece7',bgDark:'#283730'}),lang=[0,1,2].includes(+prefs.lang)?+prefs.lang:0;
+let prefs=read(PREF,{lang:2,dark:false,bgLight:'#e8ece7',bgDark:'#283730'}),lang=[0,1,2].includes(+prefs.lang)?+prefs.lang:2;
 let library=read(STORAGE,{projects:[],folders:[]});if(!Array.isArray(library.projects)||!Array.isArray(library.folders))library={projects:[],folders:[]};library.projects=library.projects.filter(p=>E.validate(p.state));
 let draft=read(DRAFT,null),state=draft&&E.validate(draft.state)?draft.state:E.state();
 let meta=draft?.meta||{id:E.id(),name:'',created:new Date().toISOString(),folder:''};

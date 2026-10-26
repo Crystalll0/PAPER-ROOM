@@ -1,51 +1,99 @@
-# Process
+# Development process
 
-## 起点
+## Starting idea
 
-用户希望做一个自由折纸与教学网站：默认 A4，左键拖动纸张，空格才确认折痕，右键旋转视角，沿折痕选择裁剪长度，并把碎片放入回收站。
+I wanted to create a virtual paper workspace where beginners could explore folding and paper crafts. My initial idea included different paper sizes, dragging to fold, cutting along creases and a learning section.
 
-## 第一版设计决定
+I proposed using the left mouse button to drag paper, Space to confirm a fold and the right mouse button to rotate the view. Separating preview from confirmation was important to me: an exploratory drag should not leave an unwanted crease.
 
-1. 采用可旋转三维投影和分片几何，而不是完整柔性纸张物理模拟，以先验证连续折叠操作。
-2. 保留用户提出的空格确认，避免每次试探拖动都留下折痕；另提供屏幕确认/取消按钮。
-3. 裁剪先限定在展开状态。部分切口只保存切口，贯穿纸片才产生可移动碎片。
-4. 增加裁剪范围检查，防止局部折痕被剪完后错误切断折痕以外的材料。
-5. 合并相邻共线折痕，允许在连续折叠后沿完整材料折痕裁剪。
+## Scope decision
 
-## AI 使用
+The initial discussion included fully free folding and tutorials for objects such as a paper crane. I accepted Codex's recommendation to start with constrained straight-fold geometry instead of attempting a complete flexible-paper physics simulation. This made a working interaction more achievable and explainable.
 
-本原型由 OpenAI Codex 根据用户的交互描述生成。AI 用于范围分析、界面布局、几何代码、基础教学文案、验证与部署。采纳了分离「拖动预览」和「确认折痕」的实现。未采用完整柔性纸张模拟和复杂千纸鹤教程作为首版范围，先建立可运行的直线平折原型。用户后续应阅读、理解并解释连接输入与响应的核心代码，而不是把生成内容描述为全部自行编写。
+The current implementation uses polygon splitting and flat folding. More complex physical behaviours remain limitations, rather than being presented as completed features.
 
-## 技术验证
+## Changes made during development
 
-通过几何状态测试：两次折叠、面积守恒、撤销、展开、部分和接续裁剪。浏览器显示页面已检查。自动化浏览器执行被当前环境限制，未声称完整跨浏览器操作验证。
+### Preview before confirmation
 
-## 用户试用：待完成
+Dragging shows the proposed shape. Releasing the mouse retains the preview; Space commits it and Esc cancels it. This gives users an opportunity to inspect the response and choose their next action.
 
-尚未安排另一位真实用户试用，不能用 AI 测试代替该项要求。
+### Cut marks that remained in empty space
 
-建议不给操作解释，先让试用者折一次、取消一次预览、沿折痕剪出一段，再继续剪开并把一片放进回收站。记录对方尝试了什么、哪里犹豫，以及是否理解空格确认。根据真实观察填写一次改进，或说明保留设计的理由。不记录身份。
+While using the first version, I noticed that lines remained suspended in the workspace after paper was cut and moved. I provided a screenshot and requested a correction.
 
-## Studio 02：根据用户反馈改进
+The implementation was changed so that each piece owns its marks. Marks are clipped to that piece's material, and severed cut/crease markers are removed. Internal mesh edges are also suppressed to reduce harsh lines.
 
-用户实际体验第一版后提供截图和反馈：裁切后的线条悬空；折叠预览与确认的位置不一致；需要保存和作品分类；点击回收站不应立刻恢复；希望加入胶水、翻面、吸附、三语言与明暗主题、圆规裁圆。这是本轮设计反馈，不能在未确认试用条件的情况下描述成课程规定的“解释之前的另一位用户试用”。
+### Recycle-bin management
 
-### 修改与原因
+The first recycle-bin action immediately restored the most recent piece. I asked for a separate window so that users could choose a specific piece, restore all pieces or delete unwanted pieces. This made the outcome of opening the bin clearer.
 
-- 原来的切口独立于纸片绘制，且分片边缘全部描边，造成悬空粗线和内部硬边。改为每张纸片持有材料坐标下的折痕/切口；绘制时剪裁到当前材料面；贯穿裁切移除该线标记，内部网格边缘相互消去。
-- 折叠吸附后显示完全贴合的最终预览。没有纸面接触时不能确认。翻面改变纸的当前正面，每次朝上折起。
-- 加入具备名称、创建时间、修改时间和分类文件夹的本地作品库。草稿自动存储；新建前保存当前作品，存储失败不清空工作台；JSON 导出方便备份和迁移。
-- 回收站改为独立管理窗口，逐张显示缩略图；单张/全部恢复和删除分开，删除可撤销。
-- 胶水点涂后，移动纸片接触涂胶区域，确认才合并；保留各自纸色，隐藏胶水。支持本张纸折回粘贴并固定。
-- 圆规从圆心拖半径；剪刀选择圆线确认裁切，生成圆片、带孔余纸或独立边角。
-- 新增简中/繁中/英文、明暗主题及持久化设置。
+### Outward folds on narrow strips
 
-### 验证与尚存限制
+A later version required the dragged point to contact the remaining paper before a fold could be confirmed. When I tried the narrow star-strip paper, I found that this prevented ordinary outward and diagonal folds.
 
-独立几何测试与最小 DOM 状态测试通过，包含切口不提前分离、圆切面积、内部边缘消去、粘贴色彩、同纸固定、保存重载及存储失败保护。桌面浏览器已显示新版界面，观察到圆形纸片与轻柔折痕。未把替身测试描述成真实浏览器自动化，也未声称完整跨设备验证。
+I rejected that restriction and requested that snapping assist alignment without controlling whether a fold is permitted. The revised version allows outward folds when the fold line actually crosses the material. The preview shows the same flat-fold geometry that confirmation produces.
 
-仍使用受约束的几何模拟，不是柔性纸张物理；裁剪和点涂需先展开。后续应重点观察用户是否理解吸附状态、胶水确认，以及浏览器本地保存和导出备份的区别。
+This is a concrete example of using my own trial of the prototype to question and revise an AI-generated implementation.
 
-## 2026-10-23：开放向纸面外折叠
+### Additional workspace features
 
-用户用星星长条纸指出，要求落点回到纸面会限制正常斜折和向外折叠。取消接触作为确认条件，保留吸附辅助。只要折线实际穿过材料，任何纸型都可以确认；无吸附时提示“向外折叠预览”。预览与确认都使用相同的最终平折几何，避免悬空预览确认后跳变。补充全部五种纸型的向外折叠、预览一致、面积守恒，以及长条纸的指针拖动、确认按钮和撤销测试。
+I requested saved projects and folders so that users could retain their work. I also requested adjustable glue painting, flipping, circular cutting, themes and language choices. These support the core activity, but their quantity is not evidence of usability on its own.
+
+## Trial with another person — not yet completed
+
+The observations above are the author's own feedback during development. They are not claimed as the assignment's required trial with another person.
+
+Before submission, ask at least one other person to try the experience before explaining the controls. Record actual observations below; do not invent results or identify the participant.
+
+- **Date:** To be completed.
+- **Task given before explaining the controls:** To be completed.
+- **What the participant attempted first:** To be completed.
+- **Where they hesitated or made a mistake:** To be completed.
+- **Whether they understood the feedback:** To be completed.
+- **One change made in response, or a reason for keeping the design:** To be completed.
+- **Result after the decision:** To be completed.
+
+A suitable trial task is to fold the paper, unfold it and try cutting it into two pieces. Observe before offering help.
+
+## AI use
+
+I used OpenAI Codex to discuss scope, generate and revise HTML/CSS/JavaScript, work on geometry, create checks, prepare documentation and publish the website.
+
+I supplied the concept and interaction requirements, tried the prototype, provided screenshots and requested revisions. Much of the implementation was generated and modified with Codex; I do not claim that I independently wrote all of the code.
+
+- **Suggestion kept:** start with constrained straight-fold geometry rather than a full flexible-paper simulation.
+- **Suggestion or implementation changed:** the paper-contact requirement for confirming folds was too restrictive, especially for narrow strips. I requested outward folding while keeping snapping optional.
+- **Design requirement originating from me:** Space confirms a preview so that exploratory dragging does not immediately leave creases.
+
+## A piece of the program to explain
+
+The folding interaction connects three parts of the code:
+
+1. Pointer events in `dist/app.js` record a drag's start and target positions.
+2. `foldPlan` in `dist/engine.js` places a fold line halfway between them, perpendicular to the drag direction. It checks whether the line divides material and prepares a preview.
+3. Confirming calls `fold`, which divides the affected polygons, reflects the moving side across the line and records the crease. Cancelling discards the preview without changing the paper.
+
+Before submission, I need to be able to explain this connection in my own words, rather than only repeat the function names.
+
+## Verification and limits
+
+Geometry checks cover folding, area conservation, partial and complete cuts, circular holes, separate scraps, glue and input validation. Additional checks cover outward folding on all five paper sizes and agreement between the preview and confirmed geometry.
+
+Application-state checks cover saved projects, timestamps, folders, recycle-bin actions, undo, themes, languages, persistence and storage-failure protection. They use a minimal DOM substitute, not a real browser.
+
+Earlier browser inspection confirmed the workspace layout and paper rendering. Neither that inspection nor the automated checks replace the user trial or the final fresh-terminal run required before submission.
+
+## Development history
+
+This repository carries forward three existing development commits from the local Sites source repository, followed by preparation of the English submission files. The earlier commit messages are generic, but their diffs record the initial prototype, the expanded workspace and outward-fold correction.
+
+The original development snapshots and dates are retained. Commit contact information was replaced with the repository owner's GitHub no-reply address before public upload. Historical snapshots may contain the earlier Chinese documentation; the current submission documentation is in English. No development dates or user-trial results have been fabricated.
+
+## Remaining submission tasks
+
+- Complete and document the trial with another person.
+- Make a change based on that trial, or explain why the design was retained.
+- Run the README instructions from a fresh terminal and test the main action and an error case.
+- Check that the public repository opens while signed out.
+- Submit the repository URL on Canvas before 1 November 2026, 23:59 Hong Kong time.

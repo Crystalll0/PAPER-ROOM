@@ -1,6 +1,10 @@
 # Credits
 
-- 产品概念和主要交互：用户提供。
-- 第一版页面、几何实现、文档：OpenAI Codex 辅助生成。
-- 使用浏览器原生 Canvas、系统字体和 Unicode 工具符号；未借用外部图片、声音、数据、代码教程或第三方 JavaScript 库。
-- 线上预览通过 OpenAI Sites 发布，默认仅所有者可访问。它不是课程要求的本人公开 GitHub 仓库。
+- **Concept, interaction requirements and design feedback:** the project author, GitHub user [Crystalll0](https://github.com/Crystalll0).
+- **AI assistance:** OpenAI Codex assisted with implementation, debugging, checks and documentation. See [PROCESS.md](PROCESS.md) for specific accepted and revised decisions.
+- **Technologies:** native browser HTML, CSS, JavaScript, Canvas and local storage. The application has no third-party JavaScript runtime library.
+- **Visual materials:** system fonts, Unicode tool symbols and paper shapes drawn by the application. No external photos, sound recordings or datasets were used.
+- **Hosting:** OpenAI Sites hosts the optional live demonstration. Local execution does not depend on that service.
+- **Course examples and tutorials:** no course example or external tutorial code was incorporated into this implementation.
+
+The source is provided for this coursework submission. No third-party media, personal recordings or API credentials should be added without checking permission to share them.
