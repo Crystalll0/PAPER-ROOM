@@ -25,7 +25,7 @@ if(!PRACTICE)(()=>{
  function renderTour(){
   $('learn').textContent=t2('help');$('tourLanguage').value=lang;
   $('tourTitle').textContent=page<0?t2('welcome'):words.titles[page][lang];
-  $('tourWelcomeText').textContent=t2('intro');$('tourLanguageLabel').textContent=t2('language');$('tourPrivacy').textContent=t2('privacy');
+  $('tourWelcomeText').textContent=t2('intro');$('tourLanguageLabel').textContent='选择语言 / 選擇語言 / Select Language';$('tourPrivacy').textContent=t2('privacy');
   $('tourWelcome').hidden=page>=0;$('tourLesson').hidden=page<0;dialog.classList.toggle('lesson-open',page>=0);
   $('tourBack').hidden=page<0;$('tourBack').textContent=t2('back');$('tourSkip').textContent=t2('skip');
   $('tourNext').textContent=t2(page<0?'start':page===6?'finish':'next');$('tourNext').disabled=page>=0&&!done;
