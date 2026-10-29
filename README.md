@@ -46,6 +46,10 @@ Open **http://localhost:8765**. Stop the server with **Ctrl+C** in the terminal.
 
 The repository version defaults to English. Simplified Chinese and Traditional Chinese remain available as optional interface languages. A previous language choice is retained by the browser.
 
+## First-visit practice
+
+On first opening, a separate practice sheet guides users through dragging, cancelling a preview, confirming a fold and unfolding. Close it at any time or replay it from **Tutorial / Help**. Practice does not modify the current project. The browser remembers dismissal when local storage is available.
+
 ## Controls and features
 
 | Action | Control |
@@ -63,6 +67,10 @@ The repository version defaults to English. Simplified Chinese and Traditional C
 | Save or back up | Save project or Export file |
 
 Paper sizes include A4, A3, square, rectangular and narrow star-strip paper. The workspace also includes adjustable paper/background colours, light/dark themes, folders, project renaming and JSON import/export.
+
+## Display settings
+
+Use **Display settings** to enlarge interface text, add a larger workspace pointer ring, or adjust dashed-guide thickness and colour. **Translucent paper layers** is an optional viewing aid for checking overlaps. It does not change the geometry, automatically align edges or enable individual-layer folding. Settings are stored in the browser and can be reset.
 
 ## Error handling
 
@@ -96,6 +104,8 @@ dist/
   app.js           Input, interface and browser storage
   engine.js        Folding, cutting and gluing geometry
   i18n.js          Interface language strings
+  tour.js          Isolated first-visit folding practice
+  display.js       Text, pointer, guide and layer display preferences
 tests/
   geometry.cjs     Geometry regression checks
   workspace.cjs    Application-state checks
@@ -116,4 +126,4 @@ No test packages need installing. The workspace tests use a minimal DOM substitu
 
 OpenAI Codex assisted with implementation, debugging, testing and documentation. The author's design decisions and AI-use disclosure are in [PROCESS.md](PROCESS.md). Tool and material credits are in [CREDITS.md](CREDITS.md).
 
-**Work in progress:** the trial with another person and the final fresh-terminal check are still pending. The development timeline and current trial plan are recorded in [PROCESS.md](PROCESS.md).
+**Work in progress:** feedback from four participants and the resulting introduction are recorded in [PROCESS.md](PROCESS.md). The sessions took place on 27–28 October, with free exploration before task prompts. A follow-up trial of the introduction and display settings, and the final fresh-terminal check, remain pending.

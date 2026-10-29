@@ -8,15 +8,15 @@ I proposed using the left mouse button to drag paper, Space to confirm a fold an
 
 ## Development timeline
 
-The project is organised into the following development stages. v4 and v5 are my working labels for these stages, rather than GitHub release tags. Activities after 26 October are planned and will be updated after they take place.
+The project is organised into the following development stages. v4 and v5 are my working labels for these stages, rather than GitHub release tags. Later stages are updated as observations and changes are recorded; version labels are not a claim that every proposed feature is implemented.
 
 | Dates (2026) | Development stage | Status |
 | --- | --- | --- |
 | 15–20 October | Decide on the concept and explore the interaction through early prototypes. | Completed |
 | 20–23 October | Develop the initial website prototype through repeated testing, debugging and feature revisions, reaching v4. | Completed |
 | 24–26 October | Refine v4 and adjust its features, producing the v5 working version. | Completed |
-| 27–28 October | Conduct user testing and collect observations and feedback. | Planned |
-| 29–30 October | Revise the website in response to the user feedback. | Planned |
+| 27–28 October | Let four participants explore first, then give small tasks and collect feedback. | Completed |
+| 29–30 October | Add a replayable introduction and clearer confirmation cues; document folding and cutting limitations. | Introduction implemented on 29 October; follow-up trial pending |
 | 31 October | Make the final updates to the GitHub repository and finish the submission documentation. | Planned |
 
 ## Scope decision
@@ -53,19 +53,42 @@ The narrow strip exposed a problem I had not noticed with A4 paper: the contact 
 
 I requested saved projects and folders so that users could retain their work. I also requested adjustable glue painting, flipping, circular cutting, themes and language choices. My priority for the next trial is whether someone can understand and complete a fold, rather than whether they discover every tool.
 
-## Trial with another person — not yet completed
+## Trial with four participants
 
-So far, the feedback above comes from my own use of the prototype. I still need to observe another person trying it without an explanation of the controls. I will complete the following record after that session.
+I invited four people to try Paper Room: two classmates, one participant around 50 and one around 16. The sessions took place on 27–28 October 2026. I first let participants explore freely, before giving small tasks such as folding a triangle, cutting, gluing, adding a sheet and changing colours. I reported the observations on 29 October.
 
-- **Date:** To be completed.
-- **Task given before explaining the controls:** To be completed.
-- **What the participant attempted first:** To be completed.
-- **Where they hesitated or made a mistake:** To be completed.
-- **Whether they understood the feedback:** To be completed.
-- **One change made in response, or a reason for keeping the design:** To be completed.
-- **Result after the decision:** To be completed.
+All four could locate the relevant buttons and complete basic operations, although they needed some time to explore and become familiar with the interaction rules. Younger participants noticed the confirmation prompt more quickly. The participant around 50 had more difficulty noticing that clicking Confirm or pressing Space was required before continuing. This is an observation from this small group, not a general conclusion about age or ability.
 
-I plan to ask the participant to fold the paper, unfold it and try cutting it into two pieces. I will first observe what they attempt before offering help.
+### Decision: make confirmation something users practise
+
+The feedback suggested an interactive introduction on first opening, with a way to replay it through Tutorial / Help, or a short demonstration video. I chose a hands-on introduction because the difficulty concerned a decision the user needs to make during an action: a visible preview still needs confirmation.
+
+The introduction uses a separate practice sheet. It asks users to drag, cancel the first preview, drag again, confirm and unfold. Instructions change after each action, and the next relevant button is shown explicitly. It can be closed, restarted or reopened without changing the user's current project. The workspace confirmation bar is also more prominent.
+
+This change was implemented on 29 October with Codex assistance. Automated checks cover the practice sequence, replay, display preferences and preservation of the current project. A browser check also exercised dragging, cancellation, Space confirmation, unfolding and dismissal persistence. A follow-up trial has not yet established whether it resolves the original difficulty.
+
+### Decision: offer adjustable display settings
+
+The older participant also asked for clear controls for text size, pointer size and dashed-line thickness and colour. I added a labelled Display settings button with three text sizes, optional larger workspace pointer rings, adjustable dashed guides and a reset button. These preferences are saved in the browser.
+
+Some folds were difficult to align, and a small overhang was not always visible from one side. I added an optional translucent-layer view so that users can inspect overlaps without making the default view visually busy. This is a viewing aid, not a correction to the geometry or a claim that alignment problems have been solved. The reported alignment difficulty still needs a reproducible example and further investigation.
+
+### Folding limitations exposed by the trial
+
+Trying to make recognisable objects highlighted a gap between the three-dimensional view and the folding model. A crane requires opening individual layers, and a strip star starts with a knot. The current model moves layers together in flat folds; rotating the view does not make layer selection or knotting possible.
+
+I retained the current folding model for this submission and documented this limitation. Individual-layer manipulation and flexible paper would require a substantial change to the geometry and interaction, rather than an additional camera control.
+
+### Request for more expressive cutting
+
+Participants wanted freer cutting for paper-cut patterns, complex outlines and curves, while retaining cuts along creases. One proposed interaction was to draw a dashed cutting path, select it with Scissors, preview the result and confirm with Space or the confirmation button.
+
+This is recorded as a future development direction, not an implemented feature. The current version still supports crease cuts and circular guides. Open versus closed paths, self-intersections and partial cuts need clear behaviour before freehand cutting can be added reliably. For this iteration, I prioritised the confirmation difficulty observed during basic use.
+
+### Follow-up still needed
+
+- Ask a participant to try the revised introduction and record whether confirmation is easier to understand.
+- Record any further change or the reason for retaining the revised design.
 
 ## AI use
 
@@ -103,8 +126,7 @@ The original development snapshots and dates are retained. Commit contact inform
 
 ## Remaining submission tasks
 
-- Complete and document the trial with another person.
-- Make a change based on that trial, or explain why the design was retained.
+- Record a follow-up observation of the revised introduction and display settings.
 - Run the README instructions from a fresh terminal and test the main action and an error case.
 - Check that the public repository opens while signed out.
 - Submit the repository URL on Canvas before 1 November 2026, 23:59 Hong Kong time.

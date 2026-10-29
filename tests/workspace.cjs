@@ -19,3 +19,34 @@ c.c.localStorage.setItem=()=>{throw Error('quota')};let before=c.run('JSON.strin
 console.log('PASS: project save/rename/timestamps/folders; automatic save before New; bin opening/restore/delete/all/undo; pointer-to-contact fold; flip/unfold; all languages; theme; persistence after reload; storage-failure protection.');
 
 let outward=boot();outward.run("state=E.state();state.pieces=[E.makePiece('strip')];selected=state.pieces[0].id;fit();let start=project({x:10,y:-140,z:0}),end=project({x:80,y:-60,z:0});canvas.pointerdown({button:0,clientX:start.x-.1,clientY:start.y+.1,pointerId:1,preventDefault(){}});canvas.pointermove({clientX:end.x,clientY:end.y});canvas.pointerup({clientX:end.x,clientY:end.y})");assert.equal(outward.run('pending.contact'),false);assert.equal(outward.el.confirm.disabled,false);assert.equal(outward.run('state.pieces[0].creases.length'),0);outward.run('commit()');assert.equal(outward.run('state.pieces[0].folded'),true);outward.run("$('undo').click()");assert.equal(outward.run('state.pieces[0].creases.length'),0);console.log('PASS: paper-strip outward pointer drag, enabled confirm, commit and undo.');
+
+// Onboarding runs on a separate sheet and must never mutate an existing draft.
+let tour=boot();
+const originalProject=tour.run('JSON.stringify(state)');
+function loadTour(b){vm.runInContext(fs.readFileSync(require.resolve('../dist/tour.js'),'utf8'),b.c)}
+loadTour(tour);assert.equal(tour.el.tourDialog.open,true);
+function practiceDrag(){tour.run("$('tourCanvas').pointerdown({button:0,clientX:724,clientY:400,pointerId:1,preventDefault(){}});$('tourCanvas').pointermove({clientX:376,clientY:400});$('tourCanvas').pointerup()")}
+practiceDrag();assert.equal(tour.el.tourCancel.hidden,false);assert.equal(tour.el.tourConfirm.hidden,true);
+tour.el.tourCancel.click();assert.match(tour.el.tourInstruction.textContent,/2 \/ 4/);
+practiceDrag();assert.equal(tour.el.tourConfirm.hidden,false);tour.el.tourConfirm.click();
+assert.equal(tour.el.tourUnfold.hidden,false);tour.el.tourUnfold.click();assert.equal(tour.el.tourFinish.hidden,false);
+assert.equal(tour.run('JSON.stringify(state)'),originalProject,'practice must preserve artwork');
+tour.el.tourFinish.click();assert.equal(tour.el.tourDialog.open,false);
+let returning=boot(tour.store);loadTour(returning);assert.equal(returning.el.tourDialog.open,false);
+returning.el.learn.click();assert.equal(returning.el.tourDialog.open,true);
+returning.el.tourRestart.click();assert.match(returning.el.tourInstruction.textContent,/1 \/ 4/);
+returning.el.tourClose.click();
+let unavailable=boot();unavailable.c.localStorage.getItem=()=>{throw Error('disabled')};unavailable.c.localStorage.setItem=()=>{throw Error('disabled')};loadTour(unavailable);unavailable.el.tourClose.click();assert.equal(unavailable.el.tourDialog.open,false);
+console.log('PASS: first-visit tutorial, cancel/confirm/unfold practice, draft isolation, replay, restart and unavailable storage.');
+
+let display=boot();display.c.document.documentElement.style={setProperty(){}};
+function loadDisplay(b){vm.runInContext(fs.readFileSync(require.resolve('../dist/display.js'),'utf8'),b.c)}
+loadDisplay(display);const unchanged=display.run('JSON.stringify(state)');
+for(const [id,value] of [['textSize','1.4'],['pointerSize','40'],['guideWidth','3'],['guideColor','#112233']]){display.el[id].value=value;display.el[id].onchange()}
+display.el.layerView.checked=true;display.el.layerView.onchange();
+assert.equal(display.run('prefs.textSize'),1.4);assert.equal(display.run('prefs.layerView'),true);
+assert.equal(display.run('JSON.stringify(state)'),unchanged,'display changes must not alter geometry');
+let restoredDisplay=boot(display.store);restoredDisplay.c.document.documentElement.style={setProperty(){}};loadDisplay(restoredDisplay);
+assert.equal(restoredDisplay.el.guideColor.value,'#112233');assert.equal(restoredDisplay.el.layerView.checked,true);
+restoredDisplay.el.resetDisplay.click();assert.equal(restoredDisplay.run('prefs.textSize'),1);assert.equal(restoredDisplay.run('prefs.layerView'),false);
+console.log('PASS: display preferences, persistent settings, reset and geometry isolation.');
