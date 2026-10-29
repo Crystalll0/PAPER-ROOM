@@ -63,9 +63,9 @@ All four could locate the relevant buttons and complete basic operations, althou
 
 The feedback suggested an interactive introduction on first opening, with a way to replay it through Tutorial / Help, or a short demonstration video. I chose a hands-on introduction because the difficulty concerned a decision the user needs to make during an action: a visible preview still needs confirmation.
 
-The introduction uses a separate practice sheet. It asks users to drag, cancel the first preview, drag again, confirm and unfold. Instructions change after each action, and the next relevant button is shown explicitly. It can be closed, restarted or reopened without changing the user's current project. The workspace confirmation bar is also more prominent.
+The first introduction asked users to cancel a preview before confirming a fold. On reviewing it, I found the sequence and wording confusing. I requested a welcome screen with language selection, followed by separate activities for adding paper, folding, moving, cutting, gluing, flipping and unfolding. The revised introduction uses the actual controls in an isolated workspace. Confirmation and cancellation appear beside the paper, and users can skip or replay the introduction without changing their artwork.
 
-This change was implemented on 29 October with Codex assistance. Automated checks cover the practice sequence, replay, display preferences and preservation of the current project. A browser check also exercised dragging, cancellation, Space confirmation, unfolding and dismissal persistence. A follow-up trial has not yet established whether it resolves the original difficulty.
+These revisions were implemented on 29 October with Codex assistance. Automated checks cover the seven completion conditions and isolation from saved artwork. Browser checks exercised adding paper, dragging and confirming a fold. A follow-up participant trial has not yet established whether the revised introduction resolves the original difficulty.
 
 ### Decision: offer adjustable display settings
 
@@ -77,13 +77,13 @@ Some folds were difficult to align, and a small overhang was not always visible 
 
 Trying to make recognisable objects highlighted a gap between the three-dimensional view and the folding model. A crane requires opening individual layers, and a strip star starts with a knot. The current model moves layers together in flat folds; rotating the view does not make layer selection or knotting possible.
 
-I retained the current folding model for this submission and documented this limitation. Individual-layer manipulation and flexible paper would require a substantial change to the geometry and interaction, rather than an additional camera control.
+I requested further experiments after reviewing these limitations. The Layers tool now rotates an individual polygon panel about an available straight hinge. This allows inspection of a simple opened layer, but does not provide arbitrary layer separation or the pocket and reverse folds required for a complete crane. A separate Strip knot tool provides an adjustable guided ribbon shape. It is a preset visualisation, not a simulation of freely tying a paper strip. Both operations require confirmation and can be undone.
 
 ### Request for more expressive cutting
 
-Participants wanted freer cutting for paper-cut patterns, complex outlines and curves, while retaining cuts along creases. One proposed interaction was to draw a dashed cutting path, select it with Scissors, preview the result and confirm with Space or the confirmation button.
+Participants wanted freer cutting for paper-cut patterns, complex outlines and curves, while retaining cuts along creases. I requested a tool for drawing a dashed guide, selecting it with Scissors and confirming the cut.
 
-This is recorded as a future development direction, not an implemented feature. The current version still supports crease cuts and circular guides. Open versus closed paths, self-intersections and partial cuts need clear behaviour before freehand cutting can be added reliably. For this iteration, I prioritised the confirmation difficulty observed during basic use.
+The revised prototype implements this sequence on unfolded paper. Drawn paths are simplified into line segments. Closed paths can separate an interior shape; a partial slit keeps the sheet connected. The geometry has complexity limits, and curves are approximated rather than represented as exact smooth cuts. Automated checks cover open paths, closed shapes, partial slits and material-area preservation. Browser inspection exercised a drawn guide and its confirmed cut. This has not yet been evaluated by the four participants.
 
 ### Follow-up still needed
 

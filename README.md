@@ -48,7 +48,7 @@ The repository version defaults to English. Simplified Chinese and Traditional C
 
 ## First-visit practice
 
-On first opening, a separate practice sheet guides users through dragging, cancelling a preview, confirming a fold and unfolding. Close it at any time or replay it from **Tutorial / Help**. Practice does not modify the current project. The browser remembers dismissal when local storage is available.
+On first opening, a welcome screen offers language selection. Seven hands-on activities introduce adding paper, folding and confirming, moving, cutting, gluing, flipping and unfolding. Each activity uses the real workspace controls in a separate practice area; confirmation appears beside the paper. Skip at any time or replay from **Tutorial / Help**. Practice does not modify saved artwork. The browser remembers dismissal when local storage is available.
 
 ## Controls and features
 
@@ -60,6 +60,9 @@ On first opening, a separate practice sheet guides users through dragging, cance
 | Flip or unfold | Select a piece and choose Flip over or Unfold |
 | Cut along a crease | Unfold, select Scissors, drag along a crease and confirm |
 | Cut a circle | Draw and confirm a circle with Compass, then select its guide with Scissors and confirm |
+| Draw a cutting path | Select Draw cut on unfolded paper, drag a path and confirm the guide; select it with Scissors and confirm the cut |
+| Open one panel | Select Layers on a folded piece, choose an available hinged panel and adjust its angle, then confirm |
+| Preview a strip knot | Add a fresh strip, select Strip knot, adjust the guided shape and confirm; Unfold restores the strip |
 | Glue pieces | Paint glue, move another piece into contact and confirm |
 | Recover an action | Undo or Redo |
 | Recycle a piece | Use Move to drag it into the bin |
@@ -70,7 +73,7 @@ Paper sizes include A4, A3, square, rectangular and narrow star-strip paper. The
 
 ## Display settings
 
-Use **Display settings** to enlarge interface text, add a larger workspace pointer ring, or adjust dashed-guide thickness and colour. **Translucent paper layers** is an optional viewing aid for checking overlaps. It does not change the geometry, automatically align edges or enable individual-layer folding. Settings are stored in the browser and can be reset.
+Use **Text / Display** above the workspace or **Display settings** in the sidebar to enlarge interface text, add a larger workspace pointer ring, or adjust dashed-guide thickness and colour. The **See layers** shortcut toggles transparency. **Translucent paper layers** is an optional viewing aid for checking overlaps. It does not change the geometry, automatically align edges or enable individual-layer folding. Settings are stored in the browser and can be reset.
 
 ## Error handling
 
@@ -89,9 +92,11 @@ The hosted website and a locally served copy use separate storage. Export and im
 
 ## Known limitations
 
-This is a polygon-based folding prototype with three-dimensional projection, not a complete physical simulation of flexible paper. It supports straight, flat folds and moves the layers on one side together. It does not simulate curling, realistic collisions, individual-layer selection or complex reverse folds.
+This is a polygon-based folding prototype with three-dimensional projection, not a complete physical simulation of flexible paper. It supports straight, flat folds and moves the layers on one side together. The Layers tool can open a polygon panel about one straight hinge, but it does not implement arbitrary layer separation, pocket folds, realistic collisions or the full sequence for a crane. Close the panel before further flat folding.
 
-Cutting and painting glue require unfolded paper. Partial cuts do not simulate local bending. Circular cuts use a 96-sided approximation. Glued pieces move as a group; a self-glued fold must be undone before unfolding. Many successive operations can increase the computational workload.
+Strip knot is a guided three-dimensional ribbon shape with an adjustable parameter, not a freely tied or physically simulated knot. It requires a fresh strip and does not constitute a star-making tutorial.
+
+Cutting and painting glue require unfolded paper. Partial cuts do not simulate local bending. Circular cuts use a 96-sided approximation. Freehand guides are simplified to polygonal segments, with limits on path and mesh complexity; they are not exact smooth curves. Open partial cuts remain connected until the cut separates the material. Glued pieces move as a group; a self-glued fold must be undone before unfolding. Many successive operations can increase the computational workload.
 
 The learning section currently introduces basic controls; it does not yet include tutorials for making specific origami models. Future iterations may add detailed, step-by-step guides for shapes such as hearts, cranes, stars and Christmas trees. Desktop mouse and keyboard use is the primary target.
 
@@ -104,11 +109,15 @@ dist/
   app.js           Input, interface and browser storage
   engine.js        Folding, cutting and gluing geometry
   i18n.js          Interface language strings
-  tour.js          Isolated first-visit folding practice
+  tour.js          Welcome and seven-stage tutorial
+  practice.js      Isolated workspace for tutorial activities
+  advanced.js      Path cuts, hinged panels and guided ribbon geometry
+  advanced-ui.js   Advanced-tool controls and previews
   display.js       Text, pointer, guide and layer display preferences
 tests/
   geometry.cjs     Geometry regression checks
   workspace.cjs    Application-state checks
+  advanced.cjs     Path, panel and ribbon geometry checks
 docs/
   workspace.png    Screenshot
 ```
@@ -118,6 +127,7 @@ With Node.js installed, run:
 ```sh
 node tests/geometry.cjs
 node tests/workspace.cjs
+node tests/advanced.cjs
 ```
 
 No test packages need installing. The workspace tests use a minimal DOM substitute; they are not full browser automation or a substitute for a trial with another person.

@@ -22,3 +22,29 @@ body.large-text header{height:auto;min-height:76px;flex-wrap:wrap;padding-top:12
 body.large-text .tools button{height:auto;min-height:58px;width:65px;padding:8px 4px}
 body.large-text .tools{max-height:65%;overflow-y:auto}body.large-text .tools span{font-size:calc(10px * var(--text-scale,1))}
 body.large-text #pending{flex-wrap:wrap;max-width:95%}body.large-text #pending>div{font-size:calc(12px * var(--text-scale,1))}
+/* Welcome and task-by-task practice use the real workspace in an isolated frame. */
+#tourDialog{width:min(620px,94vw);padding:30px;max-height:94dvh;overflow:auto}
+#tourDialog.lesson-open{width:min(1320px,97vw);height:94dvh;display:flex;flex-direction:column;padding:20px}
+#tourDialog .close,dialog .close{width:36px;height:36px;min-width:36px;min-height:36px;flex:0 0 36px;padding:0;border-radius:8px;display:grid;place-items:center;line-height:1}
+#tourDialog .close:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
+#tourWelcome{line-height:1.9;padding:15px 0}#tourWelcomeText{font-size:calc(17px * var(--text-scale,1))}
+#tourLesson{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px}
+#tourLesson[hidden],#tourWelcome[hidden]{display:none}
+.lesson-heading{padding:8px 16px;background:var(--soft);border-radius:10px}
+#tourProgress{font-size:calc(12px * var(--text-scale,1));color:var(--accent)}
+#tourInstruction{font-size:calc(16px * var(--text-scale,1));min-height:0;margin:7px 0;line-height:1.55}
+#practiceFrame{width:100%;flex:1;min-height:280px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.tour-navigation{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:16px}
+.tour-navigation>div{display:flex;gap:10px}.tour-navigation button{min-height:44px;padding:8px 14px;border-radius:8px}
+.tools{max-height:76%;overflow-y:auto;scrollbar-width:thin}.tools button{flex-shrink:0}
+#layerPanel,#knotPanel{padding:12px 0}#layerPanel input,#knotPanel input{width:100%;margin-top:12px}
+#layerPanel output{display:block;margin-top:10px}#quickLayers[aria-pressed=true]{background:var(--accent);color:var(--bg);border-radius:6px}
+#displaySettings{font-weight:650;border:2px solid var(--accent)}.view-tools{max-width:95%;flex-wrap:wrap;justify-content:flex-end}
+.practice-mode header,.practice-mode .projectbar,.practice-mode footer,.practice-mode #tourDialog,.practice-mode #displaySettings,.practice-mode #quickDisplay,.practice-mode #quickLayers{display:none}
+.practice-mode main{height:100dvh;min-height:0}.practice-mode aside{width:190px;padding:16px;overflow:auto}
+.practice-mode aside h1,.practice-mode .intro,.practice-mode .snap-note,.practice-mode aside details,.practice-mode .eyebrow,.practice-mode #saveStatus{display:none}
+.practice-mode .tools{left:12px;top:60px;transform:none;max-height:66%}.practice-mode .tools button{height:40px;min-height:40px}
+.practice-mode [data-tool=path],.practice-mode [data-tool=layer],.practice-mode [data-tool=knot]{display:none}
+.practice-mode #pending{bottom:42px;max-width:92%;z-index:5}.practice-mode #toast,.practice-mode .stage-footer,.practice-mode .bin{display:none}
+.practice-mode .stage-status{top:16px}.practice-mode #pending>div{font-size:12px}
+@media(max-width:740px){#tourDialog.lesson-open{padding:12px;width:98vw;height:96dvh}.practice-mode aside{width:130px;padding:10px}.practice-mode .tools{left:6px}.view-tools{gap:2px;top:8px}.view-tools button{font-size:10px}#tourInstruction{font-size:14px}.tour-navigation{gap:5px;padding-top:8px}}
