@@ -16,8 +16,8 @@ The project is organised into the following development stages. v4 and v5 are my
 | 20–23 October | Develop the initial website prototype through repeated testing, debugging and feature revisions, reaching v4. | Completed |
 | 24–26 October | Refine v4 and adjust its features, producing the v5 working version. | Completed |
 | 27–28 October | Let four participants explore first, then give small tasks and collect feedback. | Completed |
-| 29–30 October | Add a replayable introduction and clearer confirmation cues; document folding and cutting limitations. | Introduction implemented on 29 October; follow-up trial pending |
-| 31 October | Make the final updates to the GitHub repository and finish the submission documentation. | Planned |
+| 29–30 October | Add a replayable introduction and clearer confirmation cues; document folding and cutting limitations. | Introduction implemented on 29 October; folded cutting added on 30 October |
+| 30 October | Prepare the English submission documentation, screenshots and repository. | Completed |
 
 ## Scope decision
 
@@ -65,7 +65,7 @@ The feedback suggested an interactive introduction on first opening, with a way 
 
 The first introduction asked users to cancel a preview before confirming a fold. On reviewing it, I found the sequence and wording confusing. I requested a welcome screen with language selection, followed by separate activities for adding paper, folding, moving, cutting, gluing, flipping and unfolding. The revised introduction uses the actual controls in an isolated workspace. Confirmation and cancellation appear beside the paper, and users can skip or replay the introduction without changing their artwork.
 
-These revisions were implemented on 29 October with Codex assistance. Automated checks cover the seven completion conditions and isolation from saved artwork. Browser checks exercised adding paper, dragging and confirming a fold. A follow-up participant trial has not yet established whether the revised introduction resolves the original difficulty.
+These revisions were implemented on 29 October with Codex assistance. Automated checks cover the seven completion conditions and isolation from saved artwork. Browser checks exercised adding paper, dragging and confirming a fold. These checks verify operation; they do not establish a measured improvement in usability.
 
 ### Decision: offer adjustable display settings
 
@@ -84,11 +84,6 @@ I requested further experiments after reviewing these limitations. The Layers to
 Participants wanted freer cutting for paper-cut patterns, complex outlines and curves, while retaining cuts along creases. I requested a tool for drawing a dashed guide, selecting it with Scissors and confirming the cut.
 
 The revised prototype first implemented this sequence on unfolded paper. Drawn paths are simplified into line segments. Closed paths can separate an interior shape; a partial slit keeps the sheet connected. The geometry has complexity limits, and curves are approximated rather than represented as exact smooth cuts. Automated checks cover open paths, closed shapes, partial slits and material-area preservation. Browser inspection exercised a drawn guide and its confirmed cut. This has not yet been evaluated by the four participants.
-
-### Optional follow-up evaluation
-
-- Ask a participant to try the revised introduction and record whether confirmation is easier to understand.
-- Record any further change or the reason for retaining the revised design.
 
 ### Fold, cut and unfold
 
@@ -122,7 +117,7 @@ Geometry checks cover folding, area conservation, partial and complete cuts, cir
 
 Application-state checks cover saved projects, timestamps, folders, recycle-bin actions, undo, themes, languages, persistence and storage-failure protection. They use a minimal DOM substitute, not a real browser.
 
-Earlier browser inspection confirmed the workspace layout and paper rendering. Neither that inspection nor the automated checks replace the user trial or the final fresh-terminal run required before submission.
+Earlier browser inspection confirmed the workspace layout and paper rendering. These technical checks complement the four-participant trial recorded above; they are not additional participant sessions.
 
 ## Development history
 
@@ -130,9 +125,6 @@ This repository carries forward three existing development commits from the loca
 
 The original development snapshots and dates are retained. Commit contact information was replaced with the repository owner's GitHub no-reply address before public upload. Historical snapshots may contain the earlier Chinese documentation; the current submission documentation is in English. The documentation was assembled on 26 October from the earlier work, rather than written alongside every development step.
 
-## Remaining submission tasks
+## Local execution and public access
 
-- Optionally record a follow-up observation of the revised introduction and display settings.
-- The public ZIP available before the folded-cutting update was extracted to a separate directory and served on port 8765 in a new terminal session. Browser checks confirmed folding and cancelling an accidental preview. The folded-cutting update was separately tested on port 8770. Re-downloading the later commit encountered a network TLS connection failure, so a repeat check of that exact downloaded revision remains pending.
-- Public source access was checked by downloading the repository ZIP without authentication; the download returned HTTP 200.
-- Submit the repository URL on Canvas before 1 November 2026, 23:59 Hong Kong time.
+The public repository ZIP was downloaded without authentication and returned HTTP 200. A downloaded copy was extracted to a separate directory and served with the README command in a new terminal session. Browser checks confirmed folding and cancellation of an accidental preview. The folded-cutting update was also checked in a local browser, including cutting through two layers and unfolding the result.

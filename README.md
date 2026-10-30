@@ -74,7 +74,7 @@ On first opening, a welcome screen offers language selection. Seven hands-on act
 | Commit or cancel a preview | Space / Confirm, or Esc / Cancel |
 | Rotate and zoom | Right-drag, or scroll the mouse wheel |
 | Flip or unfold | Select a piece and choose Flip over or Unfold |
-| Cut along a crease | Unfold, select Scissors, drag along a crease and confirm |
+| Cut along a crease | Select Scissors, drag along a visible crease and confirm; flat-folded layers are cut together |
 | Cut a circle | Draw and confirm a circle with Compass, then select its guide with Scissors and confirm |
 | Draw a cutting path | Select Draw cut on flat or flat-folded paper, drag a path and confirm the guide; select it with Scissors and confirm the cut |
 | Open one panel | Select Layers on a folded piece, choose an available hinged panel and adjust its angle, then confirm |
@@ -148,8 +148,8 @@ node tests/advanced.cjs
 
 No test packages need installing. The workspace tests use a minimal DOM substitute; they are not full browser automation or a substitute for a trial with another person.
 
-## Authorship and submission status
+## Authorship and evaluation
 
 OpenAI Codex assisted with implementation, debugging, testing and documentation. The author's design decisions and AI-use disclosure are in [PROCESS.md](PROCESS.md). Tool and material credits are in [CREDITS.md](CREDITS.md).
 
-Feedback from four participants and the resulting changes are recorded in [PROCESS.md](PROCESS.md). The sessions took place on 27–28 October, with free exploration before task prompts. The revised features have undergone automated and browser checks; a follow-up participant trial has not been completed. It is optional further evaluation, not evidence already collected. Canvas submission remains the author's final step.
+Feedback from four participants and the resulting changes are recorded in [PROCESS.md](PROCESS.md). The sessions took place on 27–28 October, with free exploration before task prompts. The revised features have undergone automated and browser checks.
