@@ -133,6 +133,6 @@ The original development snapshots and dates are retained. Commit contact inform
 ## Remaining submission tasks
 
 - Optionally record a follow-up observation of the revised introduction and display settings.
-- Run the README instructions from a fresh terminal and test the main action and an error case.
+- The public ZIP available before the folded-cutting update was extracted to a separate directory and served on port 8765 in a new terminal session. Browser checks confirmed folding and cancelling an accidental preview. The folded-cutting update was separately tested on port 8770. Re-downloading the later commit encountered a network TLS connection failure, so a repeat check of that exact downloaded revision remains pending.
 - Public source access was checked by downloading the repository ZIP without authentication; the download returned HTTP 200.
 - Submit the repository URL on Canvas before 1 November 2026, 23:59 Hong Kong time.
