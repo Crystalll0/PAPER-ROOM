@@ -25,11 +25,27 @@ Releasing the mouse does not commit a fold. Targets can be outside the original 
 
 ![Paper Room workspace](docs/workspace.png)
 
+### More screenshots
+
+[Welcome and languages](docs/welcome.png) · [Hands-on tutorial](docs/tutorial.png) · [Display settings](docs/display-settings.png) · [Fold, cut and unfold](docs/folded-cut.png)
+
+## Folded-paper cutting
+
+1. Fold a sheet and confirm the fold. Top view makes drawing precise paths easier.
+2. Use Draw cut or Compass to draw a new guide on the folded paper, then confirm the guide.
+3. Select Scissors, click the guide and confirm. The cut passes through all overlapping flat layers of that piece.
+4. Move the separated scraps aside or into the recycle bin.
+5. Select the remaining paper and click Unfold to reveal the repeated pattern.
+
+A slit that does not separate the material remains connected. This does not simulate bending around a partial slit. Unused freehand guides are cleared when folding or unfolding changes the workspace geometry; confirmed cuts remain in the material.
+
 ## Run locally
 
 The application is static HTML, CSS and JavaScript. It has no third-party JavaScript runtime dependencies and requires no API key, AI model or paid account. Use a modern desktop browser with a mouse and keyboard.
 
-Download and extract this repository, or clone it:
+To download without Git: open the repository's main page, click the green **Code** button, choose **Download ZIP**, then unzip `PAPER-ROOM-main.zip`. On macOS, open Terminal, type `cd ` (including the space), drag the extracted `PAPER-ROOM-main` folder into Terminal and press Return.
+
+Alternatively, clone it:
 
 ```sh
 git clone https://github.com/Crystalll0/PAPER-ROOM.git
@@ -60,7 +76,7 @@ On first opening, a welcome screen offers language selection. Seven hands-on act
 | Flip or unfold | Select a piece and choose Flip over or Unfold |
 | Cut along a crease | Unfold, select Scissors, drag along a crease and confirm |
 | Cut a circle | Draw and confirm a circle with Compass, then select its guide with Scissors and confirm |
-| Draw a cutting path | Select Draw cut on unfolded paper, drag a path and confirm the guide; select it with Scissors and confirm the cut |
+| Draw a cutting path | Select Draw cut on flat or flat-folded paper, drag a path and confirm the guide; select it with Scissors and confirm the cut |
 | Open one panel | Select Layers on a folded piece, choose an available hinged panel and adjust its angle, then confirm |
 | Preview a strip knot | Add a fresh strip, select Strip knot, adjust the guided shape and confirm; Unfold restores the strip |
 | Glue pieces | Paint glue, move another piece into contact and confirm |
@@ -96,7 +112,7 @@ This is a polygon-based folding prototype with three-dimensional projection, not
 
 Strip knot is a guided three-dimensional ribbon shape with an adjustable parameter, not a freely tied or physically simulated knot. It requires a fresh strip and does not constitute a star-making tutorial.
 
-Cutting and painting glue require unfolded paper. Partial cuts do not simulate local bending. Circular cuts use a 96-sided approximation. Freehand guides are simplified to polygonal segments, with limits on path and mesh complexity; they are not exact smooth curves. Open partial cuts remain connected until the cut separates the material. Glued pieces move as a group; a self-glued fold must be undone before unfolding. Many successive operations can increase the computational workload.
+Cutting supports flat and flat-folded paper; it cuts through all overlapping layers of the selected piece. Close a raised panel before cutting. Painting glue still requires unfolded paper. Partial cuts do not simulate local bending. Circular cuts use a polygonal approximation (96 sides on unfolded paper; 64 sides for new folded-paper guides). Freehand guides are simplified to polygonal segments, with limits on path and mesh complexity; they are not exact smooth curves. Open partial cuts remain connected until the cut separates the material. Glued pieces move as a group; a self-glued fold must be undone before unfolding. Many successive operations can increase the computational workload.
 
 The learning section currently introduces basic controls; it does not yet include tutorials for making specific origami models. Future iterations may add detailed, step-by-step guides for shapes such as hearts, cranes, stars and Christmas trees. Desktop mouse and keyboard use is the primary target.
 
@@ -136,4 +152,4 @@ No test packages need installing. The workspace tests use a minimal DOM substitu
 
 OpenAI Codex assisted with implementation, debugging, testing and documentation. The author's design decisions and AI-use disclosure are in [PROCESS.md](PROCESS.md). Tool and material credits are in [CREDITS.md](CREDITS.md).
 
-**Work in progress:** feedback from four participants and the resulting introduction are recorded in [PROCESS.md](PROCESS.md). The sessions took place on 27–28 October, with free exploration before task prompts. A follow-up trial of the introduction and display settings, and the final fresh-terminal check, remain pending.
+Feedback from four participants and the resulting changes are recorded in [PROCESS.md](PROCESS.md). The sessions took place on 27–28 October, with free exploration before task prompts. The revised features have undergone automated and browser checks; a follow-up participant trial has not been completed. It is optional further evaluation, not evidence already collected. Canvas submission remains the author's final step.

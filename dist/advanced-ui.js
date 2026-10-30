@@ -18,10 +18,11 @@ Object.assign(WORDS,{
  quickDisplay:['⚙ 字号 / 显示','⚙ 字級 / 顯示','⚙ Text / Display'],quickLayers:['◫ 半透明','◫ 半透明','◫ See layers']
 });
 WORDS.path=WORDS.pathTool;WORDS.layer=WORDS.layerTool;WORDS.knot=WORDS.knotTool;
-WORDS.cutHint=['展开后可沿折痕拖动，或点击圆形 / 自画虚线；确认后裁剪。','展開後可沿摺痕拖動，或點擊圓形 / 自畫虛線；確認後裁剪。','Unfold, then drag along a crease or click a circle / drawn guide. Confirm to cut.'];
+WORDS.cutHint=['可在平折后画线或选择辅助线，确认剪穿所有重叠纸层，再展开查看图案。','可在平摺後畫線或選擇輔助線，確認剪穿所有重疊紙層，再展開查看圖案。','Draw or select a guide and confirm to cut through all flat layers. Unfold afterwards to reveal the pattern.'];
+WORDS.compassHint=['在平面或平折纸张上，从圆心拖动设定半径，空格确认。','在平面或平摺紙張上，從圓心拖動設定半徑，空格確認。','On flat or flat-folded paper, drag from the centre to set a radius. Space confirms.'];
 WORDS.needLine=['请沿折痕拖动，或先用画裁剪线 / 圆规建立虚线。','請沿摺痕拖動，或先用畫裁剪線 / 圓規建立虛線。','Drag on a crease, or create a guide with Draw cut / Compass first.'];
 WORDS.layerNote=['半透明帮助观察重叠，不会自动对齐。纸层工具可沿单一直线折痕翻开纸面。','半透明幫助觀察重疊，不會自動對齊。紙層工具可沿單一直線摺痕翻開紙面。','Transparency reveals overlap without automatic alignment. Layers can open a panel along one straight hinge.'];
-WORDS.limitsText=['支持直线平折、单一直线铰接纸面和引导式纸条结形。并非柔性物理模拟，不支持复杂袋折或碰撞。裁剪和涂胶前需展开。','支援直線平摺、單一直線鉸接紙面和引導式紙條結形。並非柔性物理模擬，不支援複雜袋摺或碰撞。裁剪和塗膠前需展開。','Straight folds, single-hinge panels and guided ribbon-knot shapes. No flexible-paper physics, pocket folds or collision simulation. Unfold before cutting or gluing.'];
+WORDS.limitsText=['支持直线平折、单一直线铰接纸面和引导式纸条结形。并非柔性物理模拟，不支持复杂袋折或碰撞。平折纸张可叠层裁剪；涂胶前需展开。','支援直線平摺、單一直線鉸接紙面和引導式紙條結形。並非柔性物理模擬，不支援複雜袋摺或碰撞。平摺紙張可疊層裁剪；塗膠前需展開。','Straight folds, single-hinge panels and guided ribbon-knot shapes. No flexible-paper physics, pocket folds or collision simulation. Flat folded layers can be cut together. Unfold before painting glue.'];
 let lastLayerFaces=null;
 window.syncAdvanced=()=>{
  const p=piece();$('layerPanel').hidden=tool!=='layer';$('knotPanel').hidden=tool!=='knot';
@@ -37,11 +38,11 @@ window.syncAdvanced=()=>{
  if(pending&&['pathGuide','pathCut','layer','knot'].includes(pending.type))$('pendingLabel').textContent=t(pending.type+'Preview');
 };
 window.renderAdvanced=()=>{
- for(const p of state.pieces)if(!p.folded)for(const guide of p.paths||[])for(let i=1;i<guide.points.length;i++)for(const f of p.faces){const seg=E.clipSegment(guide.points[i-1],guide.points[i],f.p);if(seg)line(...seg,'#987142',1.2,[5,4])}
+ for(const p of state.pieces)for(const guide of p.paths||[])for(let i=1;i<guide.points.length;i++)for(const f of p.faces){const seg=E.clipSegment(guide.points[i-1],guide.points[i],f.p);if(seg)line(...seg,'#987142',1.2,[5,4])}
  if(pending?.points)for(let i=1;i<pending.points.length;i++)line(pending.points[i-1],pending.points[i],'#987142',1.4,[5,4]);
 };
 window.startCutPath=q=>{
- const p=piece();if(!p){notify('needSelect');return}if(p.folded){notify('needUnfold');return}
+ const p=piece();if(!p){notify('needSelect');return}if(p.openLayer||p.knot){notify('closeLayerFirst');return}
  const world=unproject(q);drag={type:'path',piece:p.id,start:world};pending={type:'pathGuide',piece:p.id,points:[world]};sync();
 };
 window.moveCutPath=q=>{if(pending.points.length<1200&&E.dist(q,pending.points.at(-1))*scale>3)pending.points.push({x:q.x,y:q.y});sync()};
@@ -59,6 +60,8 @@ $('layerAngle').oninput=previewLayer;$('layerChoice').onchange=()=>{$('layerAngl
 window.previewKnot=()=>{const p=piece();if(!p)return;if(pending&&pending.type!=='knot'){notify('saveFirst');return}const result=A.knot(p,+$('knotTightness').value/100);if(!result){notify('knotOnly');return}pending={type:'knot',piece:p.id,result};pitch=.65;sync()};
 $('makeKnot').onclick=window.previewKnot;$('knotTightness').oninput=window.previewKnot;
 window.commitAdvanced=(p,op)=>{
+ if(p.folded&&op.type==='circle'){p.paths=p.paths||[];p.paths.push({id:E.id(),points:Array.from({length:65},(_,i)=>({x:op.x+Math.cos(i*Math.PI/32)*op.r,y:op.y+Math.sin(i*Math.PI/32)*op.r}))});notify('pathReady');return true}
+ if(p.folded&&['cut','circleCut'].includes(op.type)){const points=op.type==='cut'?[op.a,op.b]:Array.from({length:65},(_,i)=>({x:op.circle.x+Math.cos(i*Math.PI/32)*op.circle.r,y:op.circle.y+Math.sin(i*Math.PI/32)*op.circle.r}));const parts=A.cutPath(p,points);if(parts){for(const part of parts)part.circles=part.circles.filter(c=>c.id!==op.circle?.id);state.pieces.splice(state.pieces.indexOf(p),1,...parts);notify(parts.length>1?'cutDone':'cutPartial')}else notify('circleNoCut');return true}
  if(op.type==='pathGuide'){p.paths=p.paths||[];p.paths.push({id:E.id(),points:op.points});notify('pathReady');return true}
  if(op.type==='pathCut'){state.pieces.splice(state.pieces.indexOf(p),1,...op.parts);notify(op.parts.length>1?'cutDone':'cutPartial');return true}
  if(op.type==='layer'||op.type==='knot'){state.pieces[state.pieces.indexOf(p)]=op.result;notify('foldDone');return true}return false;

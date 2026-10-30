@@ -51,7 +51,7 @@ The narrow strip exposed a problem I had not noticed with A4 paper: the contact 
 
 ### Additional workspace features
 
-I requested saved projects and folders so that users could retain their work. I also requested adjustable glue painting, flipping, circular cutting, themes and language choices. My priority for the next trial is whether someone can understand and complete a fold, rather than whether they discover every tool.
+I requested saved projects and folders so that users could retain their work. I also requested adjustable glue painting, flipping, circular cutting, themes and language choices. My priority for the initial trial was whether someone could understand and complete a fold, rather than whether they discovered every tool.
 
 ## Trial with four participants
 
@@ -75,7 +75,7 @@ Some folds were difficult to align, and a small overhang was not always visible 
 
 ### Folding limitations exposed by the trial
 
-Trying to make recognisable objects highlighted a gap between the three-dimensional view and the folding model. A crane requires opening individual layers, and a strip star starts with a knot. The current model moves layers together in flat folds; rotating the view does not make layer selection or knotting possible.
+Trying to make recognisable objects highlighted a gap between the three-dimensional view and the folding model. A crane requires opening individual layers, and a strip star starts with a knot. At the time of the trial, the model moved layers together in flat folds; rotating the view alone did not enable layer selection or knotting.
 
 I requested further experiments after reviewing these limitations. The Layers tool now rotates an individual polygon panel about an available straight hinge. This allows inspection of a simple opened layer, but does not provide arbitrary layer separation or the pocket and reverse folds required for a complete crane. A separate Strip knot tool provides an adjustable guided ribbon shape. It is a preset visualisation, not a simulation of freely tying a paper strip. Both operations require confirmation and can be undone.
 
@@ -83,12 +83,18 @@ I requested further experiments after reviewing these limitations. The Layers to
 
 Participants wanted freer cutting for paper-cut patterns, complex outlines and curves, while retaining cuts along creases. I requested a tool for drawing a dashed guide, selecting it with Scissors and confirming the cut.
 
-The revised prototype implements this sequence on unfolded paper. Drawn paths are simplified into line segments. Closed paths can separate an interior shape; a partial slit keeps the sheet connected. The geometry has complexity limits, and curves are approximated rather than represented as exact smooth cuts. Automated checks cover open paths, closed shapes, partial slits and material-area preservation. Browser inspection exercised a drawn guide and its confirmed cut. This has not yet been evaluated by the four participants.
+The revised prototype first implemented this sequence on unfolded paper. Drawn paths are simplified into line segments. Closed paths can separate an interior shape; a partial slit keeps the sheet connected. The geometry has complexity limits, and curves are approximated rather than represented as exact smooth cuts. Automated checks cover open paths, closed shapes, partial slits and material-area preservation. Browser inspection exercised a drawn guide and its confirmed cut. This has not yet been evaluated by the four participants.
 
-### Follow-up still needed
+### Optional follow-up evaluation
 
 - Ask a participant to try the revised introduction and record whether confirmation is easier to understand.
 - Record any further change or the reason for retaining the revised design.
+
+### Fold, cut and unfold
+
+On 29 October I pointed out that requiring unfolded paper prevented the basic workflow for folded-paper cut-outs. The update completed on 30 October allows a drawn guide to cut through the selected piece's overlapping flat layers. Each new cut is mapped back to the original material coordinates. Connectivity is checked there, so overlapping layers do not become incorrectly joined, and unfolding reveals mirrored holes.
+
+Checks cover two- and four-layer cuts, separate scraps, partial slits and area preservation. A browser check folded an A4 sheet, cut a circle through both layers, moved scraps aside and unfolded the remaining sheet to reveal two holes. Raised panels and guided knots must still be closed or unfolded before cutting. This implementation check is not a new participant trial.
 
 ## AI use
 
@@ -126,7 +132,7 @@ The original development snapshots and dates are retained. Commit contact inform
 
 ## Remaining submission tasks
 
-- Record a follow-up observation of the revised introduction and display settings.
+- Optionally record a follow-up observation of the revised introduction and display settings.
 - Run the README instructions from a fresh terminal and test the main action and an error case.
-- Check that the public repository opens while signed out.
+- Public source access was checked by downloading the repository ZIP without authentication; the download returned HTTP 200.
 - Submit the repository URL on Canvas before 1 November 2026, 23:59 Hong Kong time.
